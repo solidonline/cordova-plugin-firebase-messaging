@@ -11,7 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
-import android.R;
+import android.graphics.BitmapFactory
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
@@ -39,6 +39,7 @@ public class FirebaseMessagingPluginService extends FirebaseMessagingService {
     private int defaultNotificationIcon;
     private int defaultNotificationColor;
     private String defaultNotificationChannel;
+    private BitmapFactory bitmapFactory;
 
     @Override
     public void onCreate() {
@@ -96,13 +97,15 @@ public class FirebaseMessagingPluginService extends FirebaseMessagingService {
                 .setContentTitle(notification.getTitle())
                 .setContentText(notification.getBody())
                 .setGroup(notification.getTag())
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_notification))
+                .setLargeIcon(bitmapFactory.decodeResource(
+                        getResources(), getResources().getIdentifier("notification", "drawable", getApplicationContext().getPackageName())
+                ))
                 .setSmallIcon(defaultNotificationIcon)
                 .setColor(defaultNotificationColor)
                 // must set priority to make sure forceShow works properly
                 .setPriority(1);
 
-        notificationManager.notify(0, builder.build());
+        notificationManager.notify((int) System.currentTimeMillis() / 1000, builder.build());
         // dismiss notification to hide icon from status bar automatically
         /*new Handler(getMainLooper()).postDelayed(new Runnable() {
             @Override
