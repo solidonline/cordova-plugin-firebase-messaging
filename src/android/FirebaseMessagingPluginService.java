@@ -95,6 +95,7 @@ public class FirebaseMessagingPluginService extends FirebaseMessagingService {
                 .setContentTitle(notification.getTitle())
                 .setContentText(notification.getBody())
                 .setGroup(notification.getTag())
+                .setLargeIcon(defaultNotificationIcon)
                 .setSmallIcon(defaultNotificationIcon)
                 .setColor(defaultNotificationColor)
                 // must set priority to make sure forceShow works properly
@@ -102,12 +103,12 @@ public class FirebaseMessagingPluginService extends FirebaseMessagingService {
 
         notificationManager.notify(0, builder.build());
         // dismiss notification to hide icon from status bar automatically
-        new Handler(getMainLooper()).postDelayed(new Runnable() {
+        /*new Handler(getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
                 notificationManager.cancel(0);
             }
-        }, 3000);
+        }, 3000);*/
     }
 
     private String getNotificationChannel(RemoteMessage.Notification notification) {
